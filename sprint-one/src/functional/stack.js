@@ -20,8 +20,9 @@ var Stack = function() {
     if (keys.length) {
       delete storage[keys[keys.length - 1]];
     }
-
-    return values[values.length - 1];
+    if (values.length) {
+      return values[values.length - 1];
+    }
   };
 
   someInstance.size = function() {
