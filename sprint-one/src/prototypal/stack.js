@@ -3,26 +3,26 @@ var Stack = function() {
   // but try not not reference your old code in writing the new style.
   var someInstance = Object.create(stackMethods);
 
-  window.storage = {};
-  window.count = 1;
+  someInstance.storage = {};
+  someInstance.count = 1;
 
   return someInstance;
 };
 
 var stackMethods = {};
 
-stackMethods.push = value => {
+stackMethods.push = function(value) {
   
-  if (count in storage) { count++; }
-  storage[count] = value;
+  if (this.count in this.storage) { this.count++; }
+  this.storage[this.count] = value;
 };
 
-stackMethods.pop = () => {
-  var keys = Object.keys(storage);
-  var values = Object.values(storage);
+stackMethods.pop = function() {
+  var keys = Object.keys(this.storage);
+  var values = Object.values(this.storage);
 
   if (keys.length) {
-    delete storage[keys[keys.length - 1]];
+    delete this.storage[keys[keys.length - 1]];
   }
 
   if (values.length) {
@@ -30,9 +30,9 @@ stackMethods.pop = () => {
   }
 };
 
-stackMethods.size = () => {
+stackMethods.size = function() {
 
-  var keys = Object.keys(storage);
+  var keys = Object.keys(this.storage);
   return keys.length;
 };
 

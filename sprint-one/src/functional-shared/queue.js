@@ -3,33 +3,41 @@ var Queue = function() {
   // but try not not reference your old code in writing the new style.
   var someInstance = {};
 
-  window.storage = {};
+  someInstance.storage = {};
 
-  window.count = 1;
+  someInstance.count = 1;
 
-  someInstance.enqueue = queueMethods.enqueue;
-  someInstance.dequeue = queueMethods.dequeue;
-  someInstance.size = queueMethods.size;
+  extend(someInstance, queueMethods);
+  // someInstance.enqueue = queueMethods.enqueue;
+  // someInstance.dequeue = queueMethods.dequeue;
+  // someInstance.size = queueMethods.size;
 
   return someInstance;
 };
 
+var extend = function(destination, sources) {
+  for (var key in sources) {
+    destination[key] = sources[key];
+  }
+};
+
+
 var queueMethods = {};
 
-queueMethods.enqueue = (value) => {
+queueMethods.enqueue = function(value) {
 
-  if (count in storage) { count++; }
-  storage[count] = value;
+  if (this.count in this.storage) { this.count++; }
+  this.storage[this.count] = value;
 
 };
 
-queueMethods.dequeue = () => {
+queueMethods.dequeue = function() {
 
-  var keys = Object.keys(storage);
-  var values = Object.values(storage);
+  var keys = Object.keys(this.storage);
+  var values = Object.values(this.storage);
 
   if (keys.length) {
-    delete storage[keys[0]];
+    delete this.storage[keys[0]];
   }
 
   if (values.length) {
@@ -37,8 +45,8 @@ queueMethods.dequeue = () => {
   }
 };
 
-queueMethods.size = () => {
-  var keys = Object.keys(storage);
+queueMethods.size = function() {
+  var keys = Object.keys(this.storage);
 
   return keys.length;
 
